@@ -1,3 +1,5 @@
+import './UseState.css'
+
 import React, { useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
 import SectionTitle from '../../components/layout/SectionTitle'
@@ -5,15 +7,16 @@ import SectionTitle from '../../components/layout/SectionTitle'
 const UseState = (props) => {
 
     const [count, setCount ] = useState(0)
+    const [name, setName ] = useState("")
+
+    //Functions
     const incrementCount = () => {
         setCount(count + 1)
     }
     const decrementCount = () => {
         setCount(count - 1);
     }
-    const restartCount = () => {
-        setCount(0)
-    }
+   
     return (
         <div className="UseState">
             <PageTitle
@@ -28,12 +31,11 @@ const UseState = (props) => {
                     <button className="btn" onClick={() => decrementCount()}>-1</button>
                     <button className="btn" onClick={() => incrementCount()}>+1</button>
                 </div>
-                <div>
-                    <button className="btn" onClick={() => restartCount()}>Zerar</button>
-                </div>
             </div>
 
             <SectionTitle title="Exercício #02"></SectionTitle>
+            <input type="text" className="input" value={name} onChange={e => setName(e.target.value)}/>
+            <span className="text">{name}</span>
         </div>
     )
 }
