@@ -1,27 +1,13 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import PageTitle from '../../components/layout/PageTitle'
+import { initialState, reducer } from '../../store'
+import { numberAdd2, numberMultiplyBy7, numberDivideBy25, numberParseInt, numberSum, login } from '../../store/actions'
 
-const initialState = {
-    cart: [],
-    products: [],
-    user: null,
-    number: 0
-}
-
-function reducer(state, action) {
-    switch(action.type) {
-        case 'numberAdd2':
-            return {...state, number : state.number + 2}
-        case 'login':
-            return {...state, user : {name : action.payload } }
-        default:
-            return state
-    }
-}
 
 const UseReducer = (props) => {
 
     const [ state, dispatch ] = useReducer(reducer, initialState)
+    const [ delta, setDelta ] = useState(0)
 
     return (
         <div className="UseReducer">
@@ -36,13 +22,33 @@ const UseReducer = (props) => {
                 }
                 <span className="text">{state.number}</span>
                 <div>
+                
                     <button className="btn"
-                    onClick={() => dispatch({ type:'numberAdd2' })}
+                    onClick={() => numberAdd2(dispatch)}
                     >+2</button>
-                      <button className="btn"
-                    onClick={() => dispatch({ type:'login' , payload : 'bruno' })}
+
+                    <button className="btn"
+                    onClick={() => numberMultiplyBy7(dispatch)}
+                    >x7</button>
+
+                    <button className="btn"
+                    onClick={() => numberDivideBy25(dispatch)}
+                    >/25</button>
+
+                    <button className="btn"
+                    onClick={() => numberParseInt(dispatch)}
+                    >Arredondar</button>
+
+                    <button className="btn"
+                    onClick={() => login(dispatch, 'Bruno')}
                     >Login</button>
+
                 </div>
+
+                <hr/>
+                    
+                <input type="number" className="input" value={delta} onChange={e => setDelta(parseInt(e.target.value))}/>
+                <button className="btn" onClick={() =>numberSum(dispatch, delta)}>Somar</button>
             </div>
         </div>
     )
